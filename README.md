@@ -2,40 +2,15 @@
 
 https://github.com/clash-lang/clash-compiler/issues/1934
 
-This works:
+## Good version
 
 ```
-stack build --resolver=clash-good.yaml
+$ rm -rf _build && \
+    stack run --resolver=clash-good.yaml && \
+    cat _build/Hardware.Compucolor2.topEntity/topEntity.v
 ```
 
-But this fails:
-
-```
-stack build --resolver=clash-bad.yaml
-```
-
-With:
-
-```
-%Error:
-/compucolor-book/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/build/compucolor2-verilator/_clashilator/clash-syn/Hardware.Compucolor2.topEntity/topEntity.v:17:22:
-Value too wide for 32-bits expected in this context 64'sh100000000
-: ... In instance topEntity
-17 | assign VGA = f2[8-1-(64'sd0)*8 -: 8];
-| ^
-%Warning-WIDTH:
-/compucolor-book/.stack-work/dist/x86_64-linux-tinfo6/Cabal-3.2.1.0/build/compucolor2-verilator/_clashilator/clash-syn/Hardware.Compucolor2.topEntity/topEntity.v:17:18:
-Bit extraction of var[7:0] requires 3 bit index, not 64 bits.
-: ... In instance topEntity
-17 | assign VGA = f2[8-1-(64'sd0)*8 -: 8];
-| ^
-... Use "/* verilator lint_off WIDTH */" and lint_on around source to disable
-this message.
-%Error: Exiting due to 1 error(s)
-```
-
-
-Clash output with "good":
+Output:
 
 ```
 /* AUTOMATICALLY GENERATED VERILOG-2001 SOURCE CODE.
@@ -71,7 +46,15 @@ module topEntity
 endmodule
 ```
 
-Clash output with "bad":
+## Bad version
+
+```
+$ rm -rf _build && \
+    stack run --resolver=clash-bad.yaml && \
+    cat _build/Hardware.Compucolor2.topEntity/topEntity.v 
+```
+
+Output:
 
 ```
 /* AUTOMATICALLY GENERATED VERILOG-2001 SOURCE CODE.
