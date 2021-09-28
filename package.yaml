@@ -8,12 +8,6 @@ maintainer:          gergo@erdi.hu
 copyright:           2020 Gergő Érdi
 category:            Hardware
 
-custom-setup:
-  dependencies:
-    - base
-    - Cabal
-    - clashilator
-
 dependencies:
   - base >= 4.7 && < 5
   - clash-prelude
@@ -63,11 +57,9 @@ library:
     - Hardware.Compucolor2
     
 executables:
-      
-  compucolor2-verilator:
+   clash-issue-1934:
     source-dirs: sim
-    main: verilator.hs
+    main: main.hs
     dependencies:
       - clash-compucolor2
-    verbatim:
-      x-clashilator-top-is: Hardware.Compucolor2
+      - clash-ghc
